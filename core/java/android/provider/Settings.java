@@ -4328,6 +4328,13 @@ public final class Settings {
          */
         public static final String QS_COLUMNS_LANDSCAPE = "qs_columns_landscape";
 
+         /**
+          * Screenshod sound enable, This is the noise made when taking a screesnhot
+          * Defaults to 1 - sounds enabled
+          * @hide
+          */
+         public static final String SCREENSHOT_SHUTTER_SOUND = "screenshot_shutter_sound";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
