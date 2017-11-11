@@ -92,4 +92,7 @@
   <!-- Internal default to navigation bar value -->
   <java-symbol type="bool" name="config_defaultToNavigationBar" />
 
+  <!-- Whether device supports an alt. ambient display -->
+  <java-symbol type="bool" name="config_alt_ambient_display"/>
+
 </resources>
