@@ -69,5 +69,10 @@
   <java-symbol type="string" name="global_restart_bootloader" />
   <java-symbol type="string" name="global_restart_bootloader_message" />
 
+  <!-- Button Brightness -->
+  <java-symbol type="integer" name="config_buttonBrightnessSettingMinimum" />
+  <java-symbol type="integer" name="config_buttonBrightnessSettingMaximum" />
+  <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
+
 
 </resources>
