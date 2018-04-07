@@ -882,8 +882,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 
         try {
-            boolean showNav = mWindowManagerService.hasNavigationBar();
-            if (DEBUG) Log.v(TAG, "hasNavigationBar=" + showNav);
+            boolean showNav = mWindowManagerService.needsNavigationBar();
+            if (DEBUG) Log.v(TAG, "needsNavigationBar=" + showNav);
             if (showNav) {
                 createNavigationBar();
             }
@@ -1074,6 +1074,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
 
         mFlashlightController = Dependency.get(FlashlightController.class);
+        // listen for NAVIGATION_BAR_ENABLED setting (per-user)
+        resetNavBarObserver();
     }
 
     protected void createNavigationBar() {
@@ -3170,6 +3172,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         setHeadsUpUser(newUserId);
         // End old BaseStatusBar.userSwitched
         if (MULTIUSER_DEBUG) mNotificationPanelDebugText.setText("USER " + newUserId);
+        resetNavBarObserver();
         animateCollapsePanels();
         updatePublicMode();
         mEntryManager.getNotificationData().filterAndSort();
@@ -5688,6 +5691,60 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     };
 
+    // Reset navigation bar visibility after adding its view to window manager.
+    public static final boolean RESET_SYSTEMUI_VISIBILITY_FOR_NAVBAR = true;
+    private boolean mNavigationBarViewAttached;
+    protected boolean mUseNavBar = false;
+
+    final private ContentObserver mNavBarObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange) {
+            boolean wasUsing = mUseNavBar;
+            mUseNavBar = Settings.System.getIntForUser(
+                    mContext.getContentResolver(), Settings.System.NAVIGATION_BAR_ENABLED, 0,
+                    UserHandle.USER_CURRENT) != 0;
+            Log.d(TAG, "navbar is " + (mUseNavBar ? "enabled" : "disabled"));
+            if (wasUsing != mUseNavBar) {
+                setNavBarEnabled(mUseNavBar);
+                if (mAssistManager != null) {
+                    mAssistManager.onConfigurationChanged(mContext.getResources().getConfiguration());
+                }
+            }
+        }
+    };
+
+    private void resetNavBarObserver() {
+        mContext.getContentResolver().unregisterContentObserver(mNavBarObserver);
+        mNavBarObserver.onChange(false);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.NAVIGATION_BAR_ENABLED), true,
+                mNavBarObserver, UserHandle.USER_CURRENT);
+    }
+
+    private void setNavBarEnabled(boolean enabled) {
+        if (enabled) {
+            createNavigationBar();
+            if (RESET_SYSTEMUI_VISIBILITY_FOR_NAVBAR) {
+                resetSystemUIVisibility();
+            }
+        } else {
+            removeNavigationBar();
+        }
+    }
+
+    private void removeNavigationBar() {
+        if (mNavigationBarView != null) {
+            if (DEBUG) Log.v(TAG, "removeNavigationBar: about to remove " + mNavigationBarView);
+            mWindowManager.removeViewImmediate(mNavigationBarView);
+            mNavigationBarView = null;
+        }
+    }
+
+    private void resetSystemUIVisibility() {
+        checkBarModes();
+        notifyUiVisibilityChanged(mSystemUiVisibility);
+    }
+	
     public NotificationGutsManager getGutsManager() {
         return mGutsManager;
     }
