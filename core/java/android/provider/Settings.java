@@ -4195,6 +4195,16 @@ public final class Settings {
          */
         public static final String BUTTON_BRIGHTNESS_ENABLED = "button_brightness_enabled";
 
+        /**
+         * 0 - Default
+         * 1 - Round with ring
+         * 2 - Two-toned round with ring
+         * 3 - Squircle with ring
+         * @hide
+         */
+        public static final String QS_TILE_STYLE = "qs_tile_style";
+
+
         /** @hide */
         private static final Validator BUTTON_BRIGHTNESS_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
@@ -4595,6 +4605,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(KEY_CAMERA_LONG_PRESS_ACTION);
             PRIVATE_SETTINGS.add(KEY_CAMERA_DOUBLE_TAP_ACTION);
             PRIVATE_SETTINGS.add(MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD);
+            PRIVATE_SETTINGS.add(QS_TILE_STYLE);
         }
 
         /**
