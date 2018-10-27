@@ -4134,15 +4134,6 @@ public final class Settings {
         /** @hide */
         private static final Validator NAVIGATION_BAR_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
-        /**
-         * Value for button brightness.
-         * This is an integer value in a range between 0 and 255.
-         *      0 = off
-         *    255 = default
-         *    255 = max
-         * @hide
-         */
-        public static final String BUTTON_BRIGHTNESS = "button_brightness";
 
         /** @hide */
         public static final Validator BUTTON_BRIGHTNESS_VALIDATOR =
