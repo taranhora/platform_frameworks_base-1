@@ -101,4 +101,9 @@
   <java-symbol type="bool" name="config_notificationTinting_override" />
 
   <java-symbol type="array" name="config_vendorPlatformSignatures" />
+
+    <!-- Ambient play -->
+    <java-symbol type="string" name="ambient_recognition_notification" />
+    <java-symbol type="string" name="ambient_recognition_information" />
+
 </resources>
