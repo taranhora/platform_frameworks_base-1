@@ -113,4 +113,7 @@
          For example, a device with Home, Back and Menu keys would set this
          config to 7. -->
     <integer name="config_deviceHardwareKeys">64</integer>
+<!-- Minimum time in milliseconds between power button presses so it will be considered as a camera launch. To avoid false triggers.-->
+    <integer name="config_cameraPowerDoubleTapMinTime">0</integer>
+
 </resources>
