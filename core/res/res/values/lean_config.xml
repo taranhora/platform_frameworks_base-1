@@ -116,4 +116,7 @@
 <!-- Minimum time in milliseconds between power button presses so it will be considered as a camera launch. To avoid false triggers.-->
     <integer name="config_cameraPowerDoubleTapMinTime">0</integer>
 
+ <!-- Whether the device has outdated qti-telephony-common.jar -->
+    <bool name="config_oldQtiTelephony">true</bool>
 </resources>
+

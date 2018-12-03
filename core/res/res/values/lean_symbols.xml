@@ -107,5 +107,6 @@
     -->
     <java-symbol type="integer" name="config_cameraPowerDoubleTapMinTime" />
 
-</resources>
-
+ <!-- Old QTI Blobs -->
+  <java-symbol type="bool" name="config_oldQtiTelephony" />
+ </resources>
